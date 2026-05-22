@@ -1,58 +1,167 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# API REST Tramites en Laravel🚀
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+##### La API permitirá realizar operaciones CRUD (Crear, Leer, Actualizar y Eliminar) utilizando los métodos HTTP (POST, GET, PUT y DELETE) para administrar la información de los tramites en una base de datos.
 
-## About Laravel
+##### Requisitos previos:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Antes de comenzar, asegúrate de tener instalado PHP, Composer y cualquier servidor de apache
+php --version
+composer --version
+xammp/wamp/laravel herd
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+##### Crear un proyecto de Laravel
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+composer create-project laravel/laravel api-rest-tramites
 
-## Learning Laravel
+##### Acceder al proyecto creado
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+cd api-rest-tramites
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+##### Generación de clave de aplicación
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+php artisan key:generate
 
-## Agentic Development
+##### Crear Base de Datos en MySQL
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+hugo20271015_tramites
 
-```bash
-composer require laravel/boost --dev
+##### Configuración de la base de datos
 
-php artisan boost:install
-```
+Abre el archivo .env y configura los detalles de tu base de datos, como el nombre de la base de datos, el nombre de usuario y la contraseña.
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+DB_CONNECTION=mysql
+DB_HOST=mysql-hugo20271015.alwaysdata.net
+DB_PORT=3306
+DB_DATABASE=hugo20271015_tramites
+DB_USERNAME=hugo20271015
+DB_PASSWORD=Hugova2002
 
-## Contributing
+##### Ejecución del servidor de desarrollo
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+php artisan serve
+php artisan serve --port=8500
 
-## Code of Conduct
+##### Para Crear mi Modelo, Controlador y Migraciones
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+php artisan make:model Empleado -mcr
 
-## Security Vulnerabilities
+##### Correr las migraciones
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+php artisan migrate
 
-## License
+##### Definir los campos para mi tabla en la Migracion correspondiente a mi tabla
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    Schema::create('tramites', function (Blueprint $table) {
+$table->id();
+$table->string('nombre');
+$table->text('descripcion')->nullable();
+$table->enum('estado', ['pendiente', 'en proceso', 'completado'])->default('pendiente');
+$table->date('fecha_creacion');
+$table->timestamps();
+});
+
+##### Definir los campos en mi modelo para trabahar con mi tabla
+
+protected $table = 'tramites'; // Nombre de la tabla en la base de datos
+
+protected $fillable = [
+    'nombre',
+    'descripcion',
+    'estado',
+    'fecha_creacion'
+];
+
+##### Define las rutas de nuestra API en el archivo routes/api.php
+
+use App\Http\Controllers\TramiteController;
+
+Route::get('/tramites', [TramiteController::class, 'index']);
+Route::post('/tramites', [TramiteController::class, 'store']);
+Route::get('/tramites/{id}', [TramiteController::class, 'show']);
+Route::put('/tramites/{id}', [TramiteController::class, 'update']);
+Route::delete('/tramites/{id}', [TramiteController::class, 'destroy']);
+
+
+
+## Lista de Endpoint API
+
+#### Método GET ✅
+👉 http://127.0.0.1:8500/api/tramites
+
+<img width="883" height="743" alt="24" src="https://github.com/user-attachments/assets/177cdeed-81e3-4e70-8501-d10176667dbf" />
+
+
+
+#### Método POST ✅
+👉 http://127.0.0.1:8500/api/tramites
+
+<img width="886" height="696" alt="23" src="https://github.com/user-attachments/assets/8894bc69-f607-4db7-9a01-ea2ecf74ba93" />
+
+
+#### Método GET ✅
+👉 http://127.0.0.1:8500/api/tramites/2
+
+
+<img width="888" height="575" alt="25" src="https://github.com/user-attachments/assets/21f93c9c-2396-44c4-897e-8383701b1263" />
+
+
+#### Método PUT ✅
+👉 http://127.0.0.1:8500/api/tramites/2
+
+<img width="892" height="745" alt="26" src="https://github.com/user-attachments/assets/7850348d-2928-43cb-b3de-a579d3352447" />
+
+
+#### Método DELETE ✅
+👉 http://127.0.0.1:8500/api/tramites/2
+
+<img width="887" height="437" alt="31" src="https://github.com/user-attachments/assets/311b7d2b-626c-4bd0-aa7d-074a69e8c7f4" />
+
+
+####Definir los métodos o funciones para cada una de tus rutas en un controlador
+
+    public function index()
+{
+$tramites = Tramite::all();
+return response()->json($tramites, 200);
+}
+
+public function store(Request $request)
+{
+$tramite = Tramite::create($request->all());
+return response()->json($tramite, 201);
+}
+
+public function show($IdTramite)
+{
+$tramite = Tramite::findOrFail($IdTramite);
+return response()->json($tramite, 200);
+}
+
+public function update(Request $request, $IdTramite)
+{
+$tramite = Tramite::findOrFail($IdTramite);
+$tramite->update($request->all());
+return response()->json($tramite, 200);
+}
+
+public function destroy($IdTramite)
+{
+$tramite = Tramite::findOrFail($IdTramite);
+$tramite->delete();
+return response()->json(['message' => 'Trámite eliminado correctamente'], 200);
+}
+
+#### Notas con las Migraciones
+
+- Subir la migracion.
+    php artisan migrate
+- Deshacer la última migración ejecutada
+    php artisan migrate:rollback
+
+- Deshacer todas las migraciones
+    php artisan migrate:reset
+
+- Muestrar todas las migraciones indicando cuales han sido ejecutadas
+    php artisan migrate:status
+- Deshace todas las migraciones y las ejecuta otra vez.
+    php artisan migrate:refresh
