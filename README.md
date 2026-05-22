@@ -4,10 +4,12 @@
 
 ##### Requisitos previos:
 
+```text
 Antes de comenzar, asegúrate de tener instalado PHP, Composer y cualquier servidor de apache
 php --version
 composer --version
 xammp/wamp/laravel herd
+```
 
 ##### Crear un proyecto de Laravel
 
