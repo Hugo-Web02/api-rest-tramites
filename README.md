@@ -13,22 +13,31 @@ xammp/wamp/laravel herd
 
 ##### Crear un proyecto de Laravel
 
+```bash
 composer create-project laravel/laravel api-rest-tramites
+```
 
 ##### Acceder al proyecto creado
 
+```bash
 cd api-rest-tramites
+```
 
 ##### Generación de clave de aplicación
 
+```bash
 php artisan key:generate
+```
 
 ##### Crear Base de Datos en MySQL
 
+```bash
 hugo20271015_tramites
+```
 
 ##### Configuración de la base de datos
 
+```bash
 Abre el archivo .env y configura los detalles de tu base de datos, como el nombre de la base de datos, el nombre de usuario y la contraseña.
 
 DB_CONNECTION=mysql
@@ -37,22 +46,30 @@ DB_PORT=3306
 DB_DATABASE=hugo20271015_tramites
 DB_USERNAME=hugo20271015
 DB_PASSWORD=Hugova2002
+```
 
 ##### Ejecución del servidor de desarrollo
 
+```bash
 php artisan serve
 php artisan serve --port=8500
+```
 
 ##### Para Crear mi Modelo, Controlador y Migraciones
 
+```bash
 php artisan make:model Empleado -mcr
+```
 
 ##### Correr las migraciones
 
+```bash
 php artisan migrate
+```
 
 ##### Definir los campos para mi tabla en la Migracion correspondiente a mi tabla
 
+```bash
     Schema::create('tramites', function (Blueprint $table) {
 $table->id();
 $table->string('nombre');
@@ -61,9 +78,11 @@ $table->enum('estado', ['pendiente', 'en proceso', 'completado'])->default('pend
 $table->date('fecha_creacion');
 $table->timestamps();
 });
+```
 
 ##### Definir los campos en mi modelo para trabahar con mi tabla
 
+```bash
 protected $table = 'tramites'; // Nombre de la tabla en la base de datos
 
 protected $fillable = [
@@ -72,9 +91,11 @@ protected $fillable = [
     'estado',
     'fecha_creacion'
 ];
+```
 
 ##### Define las rutas de nuestra API en el archivo routes/api.php
 
+```bash
 use App\Http\Controllers\TramiteController;
 
 Route::get('/tramites', [TramiteController::class, 'index']);
@@ -82,7 +103,7 @@ Route::post('/tramites', [TramiteController::class, 'store']);
 Route::get('/tramites/{id}', [TramiteController::class, 'show']);
 Route::put('/tramites/{id}', [TramiteController::class, 'update']);
 Route::delete('/tramites/{id}', [TramiteController::class, 'destroy']);
-
+```
 
 
 ## Lista de Endpoint API
@@ -121,6 +142,7 @@ Route::delete('/tramites/{id}', [TramiteController::class, 'destroy']);
 
 ####Definir los métodos o funciones para cada una de tus rutas en un controlador
 
+```bash
     public function index()
 {
 $tramites = Tramite::all();
@@ -152,18 +174,19 @@ $tramite = Tramite::findOrFail($IdTramite);
 $tramite->delete();
 return response()->json(['message' => 'Trámite eliminado correctamente'], 200);
 }
+```
 
 #### Notas con las Migraciones
 
+```bash
 - Subir la migracion.
     php artisan migrate
 - Deshacer la última migración ejecutada
     php artisan migrate:rollback
-
 - Deshacer todas las migraciones
     php artisan migrate:reset
-
 - Muestrar todas las migraciones indicando cuales han sido ejecutadas
     php artisan migrate:status
 - Deshace todas las migraciones y las ejecuta otra vez.
     php artisan migrate:refresh
+```
